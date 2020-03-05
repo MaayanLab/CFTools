@@ -118,8 +118,8 @@
             }
           }
         },
-        "github": "https://github.com/MaayanLab/btools-ui",
-        "github_issues": "https://github.com/MaayanLab/btools-ui/issues",
+        "github": "https://github.com/MaayanLab/signature-commons-ui/tree/cfde",
+        "github_issues": "https://github.com/MaayanLab/CFTools/issues",
         "footer_links": [
           {
             "href": "https://nih-cfde.org/",
