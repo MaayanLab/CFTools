@@ -8,7 +8,7 @@ import json
 username = os.getenv("USERNAME")
 password = os.getenv("PASSWORD")
 
-APIurl = "http://nih-cfde-tools.org/commonfund-tools-metadata-api/%s/%s"
+APIurl = "http://nih-cfde-tools.org/metadata-api/%s/%s"
 
 auth = HTTPBasicAuth(username, password)
 credential = base64.b64encode('{username}:{password}'.format(
