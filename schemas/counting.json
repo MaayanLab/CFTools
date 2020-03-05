@@ -1,0 +1,152 @@
+[
+    {
+        "Field_Name": "resources",
+        "Type": "table",
+        "Preferred_Name": "Programs",
+        "MDI_Icon": "mdi-account-group",
+        "Table_Count": true,
+        "Visible_On_Landing": true,
+        "Priority": 1
+    },
+    {
+        "Field_Name": "libraries",
+        "Type": "table",
+        "Preferred_Name": "Grants",
+        "MDI_Icon": "mdi-certificate",
+        "Table_Count": true,
+        "Visible_On_Landing": true,
+        "Priority": 2
+    },
+    {
+        "Field_Name": "signatures",
+        "Type": "table",
+        "Preferred_Name": "Tools",
+        "MDI_Icon": "mdi-tools",
+        "Table_Count": true,
+        "Visible_On_Landing": true,
+        "Priority": 3
+    },
+    {
+        "Field_Name": "meta.Publications.Journal",
+        "Preferred_Name": "Journals",
+        "Type": "text",
+        "Preferred_Name_Singular": "Journal",
+        "Table": "signatures",
+        "MDI_Icon": "mdi-book-open-page-variant",
+        "Pie_Count": true,
+        "Meta_Count": true,
+        "Priority": 1
+    },
+    {
+        "Field_Name": "meta.Institution",
+        "Preferred_Name": "Institutions",
+        "Type": "text",
+        "Preferred_Name_Singular": "Institution",
+        "Table": "signatures",
+        "MDI_Icon": "mdi-office-building",
+        "Meta_Count": true,
+        "Bar_Count": true,
+        "Filter": true,
+        "Priority": 3
+    },
+    {
+        "Field_Name": "meta.CFProgram",
+        "Preferred_Name": "CF Programs",
+        "Type": "text",
+        "Preferred_Name_Singular": "CF Program",
+        "Table": "signatures",
+        "MDI_Icon": "mdi-office-building",
+        "Bar_Count": true,
+        "Priority": 1
+    },
+    {
+        "Field_Name": "meta.Institution",
+        "Preferred_Name": "Institutions",
+        "Type": "text",
+        "Preferred_Name_Singular": "Institution",
+        "Table": "libraries",
+        "MDI_Icon": "mdi-office-building",
+        "Filter": true,
+        "Priority": 4
+    },
+    {
+        "Field_Name": "meta.Institution",
+        "Preferred_Name": "Institutions",
+        "Type": "text",
+        "Preferred_Name_Singular": "Institution",
+        "Table": "libraries",
+        "MDI_Icon": "mdi-office-building",
+        "Filter": true,
+        "Priority": 2
+    },
+    {
+        "Field_Name": "meta.Tool_Name",
+        "Order_By": "meta.Citations",
+        "Preferred_Name": "Citations",
+        "Type": "text",
+        "Preferred_Name_Singular": "Citation",
+        "Table": "signatures",
+        "Bar_Score": true,
+        "Priority": 1
+    },
+    {
+        "Field_Name": "meta.Tool_Name",
+        "Order_By": "meta.Social_Media_Mentions",
+        "Preferred_Name": "Social Media Mentions",
+        "Type": "text",
+        "Table": "signatures",
+        "Bar_Score": true,
+        "Priority": 2
+    },
+    {
+        "Field_Name": "meta.Tool_Name",
+        "Order_By": "meta.Tweets",
+        "Preferred_Name": "Tweets",
+        "Type": "text",
+        "Table": "signatures",
+        "Bar_Score": true,
+        "Priority": 3
+    },
+    {
+        "Field_Name": "meta.Tool_Name",
+        "Order_By": "meta.Facebook_Shares",
+        "Preferred_Name": "Facebook Shares",
+        "Type": "text",
+        "Table": "signatures",
+        "Bar_Score": true,
+        "Priority": 4
+    },
+    {
+        "Field_Name": "resource",
+        "Preferred_Name": "Programs",
+        "Preferred_Name_Singular": "Program",
+        "Type": "string",
+        "MDI_Icon": "mdi-account-group",
+        "Table": "signatures",
+        "Parent_Table": "libraries",
+        "Grandparent_Table": "resources",
+        "Parent_Meta": true,
+        "Filter": true,
+        "Priority": 1
+      },
+      {
+        "Field_Name": "resource",
+        "Preferred_Name": "Programs",
+        "Preferred_Name_Singular": "Program",
+        "Type": "string",
+        "MDI_Icon": "mdi-account-group",
+        "Table": "libraries",
+        "Filter": true,
+        "Priority": 1
+      },
+      {
+        "Field_Name": "library",
+        "Preferred_Name": "Projects",
+        "Preferred_Name_Singular": "Project",
+        "Type": "string",
+        "MDI_Icon": "mdi-certificate",
+        "Table": "signatures",
+        "Filter": true,
+        "Priority": 2
+      }
+]

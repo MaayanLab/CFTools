@@ -1,0 +1,36 @@
+{
+    "match": {
+      "${$validator}": "/@?dcic/signature-commons-schema/(v[0-9]+/)?core/resource.json"
+    },
+    "properties": {
+      "Image": {
+        "visibility": 1,
+        "type": "img",
+        "src": "${PREFIX}/${meta.Icon || 'static/cfde/default.png'}",
+        "alt": "${meta.CF_program}",
+        "text": "${meta.CF_program}",
+        "priority": 1,
+        "icon": true,
+        "name": true
+      },
+      "Description": {
+        "visibility": 1,
+        "type": "text",
+        "field": "Description",
+        "text": "${meta.Description}",
+        "priority": 2,
+        "subtitle": true,
+        "description": true
+      },
+      "homepage": {
+        "visibility": 1,
+        "type": "text",
+        "field": "URL",
+        "text": "${meta.Home_Page}",
+        "hyperlink": "${meta.Home_Page}",
+        "priority": 3,
+        "MDI_Icon": "mdi-web",
+        "homepage": true
+      }
+    }
+  }
