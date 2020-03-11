@@ -168,41 +168,110 @@ We use amazon's network load balancer for this. Unlike application load balancer
 13. Select instances to register to the group (this is the instances of your k8 clusters)
 14. Review then ok
 
+## Setup https in your sigcom instance
+
+Taken from: https://dev.to/chrisme/setting-up-nginx-ingress-w-automatically-generated-letsencrypt-certificates-on-kubernetes-4f1k
+
+install cert-manager
+
+```
+$ kubectl create namespace cert-manager
+$ kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.12.0/cert-manager.yaml
+
+```
+
+Check if the pods are running (and ready!)
+```
+kubectl get pods --namespace cert-manager
+```
+
+Test if it runs correctly
+```
+$ kubectl apply -f test-cert-manager.yaml
+$ kubectl describe certificate -n cert-manager-test
+```
+
+If it says that the certificate was issued successfully, you can delete the test instance
+```
+kubectl delete -f test-cert-manager.yaml
+```
+
+Now we need our ClusterIssuer (this resource is similar to Issuer but it is not specific to a namespace, so it works globally). 
+
+Let's create two issuers for (1) staging and (2) production. First edit the emails on ```*_issuer.yaml``` files
+
+Create the issuers
+```
+$ kubectl create -f staging_issuer.yaml
+$ kubectl create -f prod_issuer.yaml
+```
+
+We now have issuers that can provide us with certificate via let's encrypt. Let's now encrypt our traffic by putting the following on your ingresses' annotation:
+
+```
+# You can change this to prod or staging depending on the type of certificate you want to use
+cert-manager.io/cluster-issuer: "letsencrypt-prod" 
+```
+
+and the followinf on spec:
+```
+tls:
+  - hosts:
+    - "{{ .Values.SERVER_NAME }}"
+    secretName: <Change this to whatever name you want to store your cert>
+```
+
+We can then deploy it using ```helm upgrade```
+```
+helm upgrade --namespace=commonfund-tools -f /path/to/values.yaml <version name taken from helm list -n <namespace> /path/to/signature-commons/charts/signature-commons/v1
+```
+
+## A note on databases
+
+Sigcom provide a database for the metadata and data via the postgres and minio docker images. If possible it is always a good idea to use services from cloud providers (e.g. RDS for metadata database). Sigcom can use these services by updating values.yaml with the database credentials (host, username, password, port). For more information on setting up a postgresql db, [you can use this aws link](https://aws.amazon.com/getting-started/tutorials/create-connect-postgresql-db/)
 
 # Some useful commands
-Deleting a namespace. This effectively deletes everything in that namespace
+#### Deleting a namespace. This effectively deletes everything in that namespace
 ```
 kubectl delete namespaces commonfund-tools
 ```
 
-getting pods/ services/ ingresses under a namespace
+#### getting pods/ services/ ingresses under a namespace
 ```
 # Get pods under commonfund-tools
 kubectl get pods --namespace=commonfund-tools
 ```
 
-Execute a command in a pod
+#### Execute a command in a pod
 ```
 kubectl exec -it --namespace=commonfund-tools <pod name> -- npx typeorm migration:run
 ```
 
-delete pod/ service/ ingress under a namespace
+#### delete pod/ service/ ingress under a namespace
 ```
 # Get pods under commonfund-tools
 kubectl delete pod <identifier> --namespace=commonfund-tools
 ```
 
-Getting releases via helm
+#### Getting releases via helm
 ```
 helm list --namespace=commonfund-tools
 ```
 
-Upgrade our installation
+#### Upgrade our installation
 ```
-helm upgrade --namespace=commonfund-tools -f /path/to/values.yaml v1-1583352262 /path/to/signature-commons/charts/signature-commons/v1
+helm upgrade --namespace=commonfund-tools -f /path/to/values.yaml <version name taken from helm list -n <namespace>  /path/to/signature-commons/charts/signature-commons/v1
 ```
+You can add --recreate-pods to recreate the pods (i.e. helm will repull the docker images. This is particularly useful if you updated the docker images)
 
-Delete cluster
+In some cases, you only want to pull an updated image of one component (e.g. the ui). For these cases you can use ```kubectl get pods -n <namespace>``` to get the name of the pod that you want to delete and ```kubectl delete pod <podname> -n <namespace>``` to delete it. This will relaunch a new instance of the pod with updated container
+
+#### Delete cluster
 ```
 eksctl delete cluster --name=commonfund-tools
+```
+
+#### logs
+```
+kubectl logs nginx-ingress-controller-7fbc8f8d75-f2wvk -n ingress-nginx -f
 ```
