@@ -20,9 +20,10 @@ spec:
     - name: http
       port: 80
       nodePort: 30080
-      targetPort: http
+      targetPort: 80
     - name: https
+      protocol: TCP
       port: 443
       nodePort: 30443
-      targetPort: https
+      targetPort: 443
 
