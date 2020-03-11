@@ -133,3 +133,5 @@ data/
 misc/
 
 signature-commons-helm/
+
+.DS_Store
